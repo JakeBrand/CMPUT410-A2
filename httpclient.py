@@ -18,12 +18,13 @@
 # Write your own HTTP GET and POST
 # The point is to understand what you have to send and get experience with it
 
+# Copyright 2015 Jake Brand
+# Collaborated with Mickael Zerihoun, Simon Fessehaye, Markus Karpoff
+
 import sys
 import socket
-# you may use urllib to encode data appropriately
 import urllib
 from urlparse import urlparse
-# imoprt URL parse? from urlparse import urlparse
 
 
 def help():
@@ -37,9 +38,7 @@ class HTTPRequest(object):
 
 
 class HTTPClient(object):
-    # def get_host_port(self,url):
 
-    # couldn't get the other way to work... tyring this way
     def connect(self, host, port=80):
 
         if(not port):
@@ -82,7 +81,7 @@ class HTTPClient(object):
         return header
 
     def get_code(self, data):
-        # split the data to get the code. Stop at 5, any more is unnecessary
+        # split the data to get the code. Stop at 3, any more is unnecessary
         if not data:
             return 500
         code = data.split(" ", 3)[1]
@@ -152,6 +151,7 @@ class HTTPClient(object):
 
         # Receive the response
         received = self.recvall(sock)
+        print(received)
         # Receive the code and body
         code = self.get_code(received)
         body = self.get_body(received)
@@ -173,8 +173,6 @@ if __name__ == "__main__":
         help()
         sys.exit(1)
     elif (len(sys.argv) == 3):
-        print("client commads [1] and [2]")
         print client.command(sys.argv[1], sys.argv[2])
     else:
-        print("client commads [1]")
         print client.command(command, sys.argv[1])
